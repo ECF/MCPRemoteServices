@@ -1,0 +1,5 @@
+-buildpath: \
+	org.eclipse.ecf.ai.mcp.tools,\
+	io.modelcontextprotocol.sdk.mcp,\
+	org.osgi.annotation.versioning,\
+	org.osgi.annotation.bundle
