@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="Local" increment="1752615580474">
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="license" value="&quot;(Apache-2.0 OR EPL-2.0)&quot;;description=&quot;This program and the accompanying materials are made available under the terms of the Apache License, Version 2.0, or the Eclipse Public License 2.0.&quot;;link=&quot;https://opensource.org/licenses/Apache-2.0,https://opensource.org/licenses/EPL-2.0&quot;"/>
+      <attribute name="copyright" value="Copyright (c) aQute SARL (2000, 2025) and others. All Rights Reserved."/>
+      <attribute name="osgi.identity" value="org.bndtools.mcp.tools.api"/>
+      <attribute name="documentation" value="https://bnd.bndtools.org/"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" value="7.2.0.202507152139-SNAPSHOT" type="Version"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <directive name="uses" value="org.eclipse.ecf.ai.mcp.tools.annotation"/>
+      <attribute name="bundle-symbolic-name" value="org.bndtools.mcp.tools.api"/>
+      <attribute name="bundle-version" value="7.2.0.202507152139-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.package" value="org.bndtools.mcp.tools.workspacetemplate"/>
+      <attribute name="version" value="7.2.0" type="Version"/>
+      <attribute name="bnd.hashes" value="-1915150406,-1923478059" type="List&lt;Long&gt;"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="7.2.0.202507152139-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.bundle" value="org.bndtools.mcp.tools.api"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="7.2.0.202507152139-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.host" value="org.bndtools.mcp.tools.api"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="7407" type="Long"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="url" value="org.bndtools.mcp.tools.api/org.bndtools.mcp.tools.api-7.2.0.jar"/>
+      <attribute name="osgi.content" value="944EFEC156477A1CEC857812E6FEEA46EA75294ED18D4248A45EA102D08DE665"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.ecf.ai.mcp.tools.annotation)(version&gt;=1.1.0)(!(version&gt;=2.0.0)))"/>
+      <attribute name="osgi.wiring.package" value="org.eclipse.ecf.ai.mcp.tools.annotation"/>
+    </requirement>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=17))"/>
+    </requirement>
+  </resource>
+</repository>
