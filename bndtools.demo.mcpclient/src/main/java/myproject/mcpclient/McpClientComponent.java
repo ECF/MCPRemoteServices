@@ -41,6 +41,7 @@ public class McpClientComponent {
 	void activate() throws Exception {
 		// The following ServerParameters setup launches as a java application an OSGi-implemented MCP Server in project
 		// bndtools.demo.mcpserver/generated/bndtools.demo.mcpserver.bndrun.jar
+		
 		// The command is ${java.home}/bin/java
 		ServerParameters.Builder spBuilder = ServerParameters.builder(Path.of(System.getProperty("java.home"), "bin", "java").toAbsolutePath().toString());
 		// this is jar in ../bndtools.demo.mcpserver/generated/bndtools.demo.mcpserver.bndrun.jar
@@ -51,12 +52,14 @@ public class McpClientComponent {
 		// Create StdioClient transport from ServerParameters Builder
 		StdioClientTransport transport = new StdioClientTransport(spBuilder
 			    .build());
+		
 		// Create client with stdio transport and some reasonable default timeouts for stdio
 		client = McpClient.sync(transport)
 		    .requestTimeout(Duration.ofSeconds(1000))
 		    .capabilities(ClientCapabilities.builder()
 		        .build())
 	        .build();
+		
 		// start and connect to stdio server. This will launch the server defined in ServerParameters and then use the Stdio
 		// transport to communicate with it/initialize the connection.
 		client.initialize();
@@ -64,22 +67,20 @@ public class McpClientComponent {
 		logger.debug("MCPCLIENT initialized");
 		
 		// TEST list tools from server
+		// This will show the tools and metadata for each that the MCP Server has via the imported remote service
 		client.listTools().tools().forEach(t -> logger.debug("MCPCLIENT seeing tool=" + t.toString()));
 		
 		// TEST of the usage of the two tools exposed by getExistingWorkspaceTemplateURLs service
-
-		// list the existing tools with getExistingWorkspaceTemplateURLs tool
-		String tool_name = BNDTOOLS_WORKSPACETEMPLATES_ADDING_TOOLS + "getExistingWorkspaceTemplateURLs";
-		logger.debug("MCPCLIENT: Calling tool:  "+ tool_name + "(" + null + ")");
+		String tool_name1 = BNDTOOLS_WORKSPACETEMPLATES_ADDING_TOOLS + "getExistingWorkspaceTemplateURLs";
+		logger.debug("MCPCLIENT: Calling tool:  "+ tool_name1 + "(" + null + ")");
 		CallToolResult getResult = client.callTool(
-			    new CallToolRequest(tool_name, 
+			    new CallToolRequest(tool_name1, 
 			        (Map<String, Object>) null)
 			);
 		String jsonResult = ((TextContent) getResult.content().get(0)).text();
-		logger.debug("MCPCLIENT: call tool=" + tool_name + " json result=" + jsonResult);
-		ObjectMapper m = new ObjectMapper();
+		logger.debug("MCPCLIENT: call tool=" + tool_name1 + " json result=" + jsonResult);
 		try {
-			JsonNode uris = m.readTree(jsonResult).findValue("uris");
+			JsonNode uris = new ObjectMapper().readTree(jsonResult).findValue("uris");
 			if (uris.isArray()) {
 				for (Iterator<JsonNode> i = uris.iterator(); i.hasNext(); ) {
 					JsonNode item = i.next();
@@ -91,12 +92,12 @@ public class McpClientComponent {
 		}
 		// Then add a workspace template url to the bndtools/Eclipse preferences...where it will
 		// then appear for the user when they subsequently go to create a new workspace
-		String tool_name1 = BNDTOOLS_WORKSPACETEMPLATES_ADDING_TOOLS + "addWorkspaceTemplateURL";
+		String tool_name2 = BNDTOOLS_WORKSPACETEMPLATES_ADDING_TOOLS + "addWorkspaceTemplateURL";
 		String uri = "https://github.com/ECF/bndtools.workspace";
 		Map<String, Object> args = Map.of("workspaceTemplateURL", uri, "name", "", "branch", "");
-		logger.debug("MCPCLIENT: Calling tool:  "+ tool_name1 + "(" + args + ")");
+		logger.debug("MCPCLIENT: Calling tool:  "+ tool_name2 + "(" + args + ")");
 		CallToolResult result = client.callTool(
-			    new CallToolRequest(tool_name1, 
+			    new CallToolRequest(tool_name2, 
 			        args)
 			);
 		String resultString = ((TextContent) result.content().get(0)).text();
